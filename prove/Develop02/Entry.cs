@@ -12,11 +12,11 @@ public class Entry
         prompt = p;
         answer = a;
     }
-    Entry(string d, string p, string a)
+    Entry(List<string> e)
     {
-        date = d;
-        prompt = p;
-        answer = a;
+        date = e[0];
+        prompt = e[1];
+        answer = e[2];
     }
 
     public void Display()
@@ -48,5 +48,29 @@ public class Entry
             }
         }
         return output;
+    }
+    static string Desanitize(string input)
+    {
+        bool last = false;
+        string output = "";
+
+        foreach(char c in input)
+        {
+            if(last)
+            {
+                if(c != '"'){
+                    output += c;
+                }
+                last = false;
+            }
+            else if(output.EndsWith('"')){
+                last = true;
+                output += c;
+            }
+            else
+            {
+                output += c;
+            }
+        }
     }
 }
