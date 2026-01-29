@@ -6,17 +6,17 @@ public class Entry
     public string prompt;
     public string answer;
 
-    Entry(string p, string a)
+    public Entry(string p, string a)
     {
         date = DateTime.Now.ToLongDateString();
         prompt = p;
         answer = a;
     }
-    Entry(List<string> e)
+    public Entry(string[] e)
     {
-        date = e[0];
-        prompt = e[1];
-        answer = e[2];
+        date = Desanitize(e[0]);
+        prompt = Desanitize(e[1]);
+        answer = Desanitize(e[2]);
     }
 
     public void Display()
@@ -72,5 +72,6 @@ public class Entry
                 output += c;
             }
         }
+        return output;
     }
 }

@@ -15,11 +15,11 @@ public class Journal
     {
         Journal j = new();
         string[] lines = System.IO.File.ReadAllLines(filename);
-        foreach(string line in lines)[
-            line = line.Substring(1,line.Length - 2);
-            List<string> nEntry = line.Split("\",\"");
-            j.entries.Add(nEntry);
-        ]
+        foreach(string line in lines){
+            string currentLine = line.Substring(1,line.Length - 2);
+            string[] nEntry = line.Split("\",\"");
+            j.entries.Add(new Entry(nEntry));
+        }
         return j;
     }
 
