@@ -2,7 +2,7 @@ using System;
 
 class Program
 {
-    public Journal current = new();
+    public static Journal current = new();
     public List<String> prompts = [];
 
     static void Write()
@@ -58,6 +58,7 @@ class Program
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
+                    break;
             }
         }while(cont);
     }

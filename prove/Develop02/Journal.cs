@@ -2,7 +2,7 @@ public class Journal
 {
     public List<Entry> entries;
 
-    Journal()
+    public Journal()
     {
         entries = [];
     }
