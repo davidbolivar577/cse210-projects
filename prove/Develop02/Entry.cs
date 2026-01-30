@@ -16,12 +16,14 @@ public class Entry
     {
         date = Desanitize(e[0]);
         prompt = Desanitize(e[1]);
+
+        //optional: add separator handling by rejoining any index past 2
         answer = Desanitize(e[2]);
     }
 
     public void Display()
     {
-        Console.WriteLine($"Date: {date}\nPrompt: {prompt}\n{answer}");
+        Console.WriteLine($"Date: {date}\nPrompt: {prompt}\n{answer}\n");
     }
 
     public string Store()

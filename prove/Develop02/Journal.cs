@@ -17,7 +17,7 @@ public class Journal
         string[] lines = System.IO.File.ReadAllLines(filename);
         foreach(string line in lines){
             string currentLine = line.Substring(1,line.Length - 2);
-            string[] nEntry = line.Split("\",\"");
+            string[] nEntry = currentLine.Split("\",\"");
             j.entries.Add(new Entry(nEntry));
         }
         return j;
