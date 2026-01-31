@@ -20,13 +20,13 @@ class Program
         int next;
         do
         {
-            if(sessionPrompts.Count == prompts.Count)
+            if (sessionPrompts.Count == prompts.Count)
             {
                 sessionPrompts = [];
             }
             next = rand.Next(prompts.Count);
             Console.WriteLine("Loop in do"); //debug
-        }while(sessionPrompts.Contains(next));
+        } while (sessionPrompts.Contains(next));
         sessionPrompts.Add(next);
 
         string prompt = prompts[next];
@@ -53,30 +53,31 @@ class Program
         bool cont = true;
         string choice = "";
         Console.WriteLine("Welcome to Journal Program!");
-        do{
+        do
+        {
             Console.WriteLine("Please select one of the following choices:");
             Console.WriteLine("1. Write\n2. Display\n3. Load\n4. Save\n5. Quit");
             Console.Write("What would you like to do?: ");
             choice = Console.ReadLine();
 
-            switch(choice)
+            switch (choice)
             {
                 case "1":
                     Write();
                     break;
-                
+
                 case "2":
                     current.Display();
                     break;
-                
+
                 case "3":
                     Load();
                     break;
-                
+
                 case "4":
                     Save();
                     break;
-                
+
                 case "5":
                     cont = false;
                     break;
@@ -84,6 +85,6 @@ class Program
                     Console.WriteLine("Invalid choice. Try again.");
                     break;
             }
-        }while(cont);
+        } while (cont);
     }
 }

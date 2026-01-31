@@ -41,10 +41,10 @@ public class Entry
     static string Sanitize(string input)
     {
         string output = "";
-        foreach(char c in input)
+        foreach (char c in input)
         {
             output += c;
-            if(c == '"')
+            if (c == '"')
             {
                 output += '"';
             }
@@ -56,16 +56,18 @@ public class Entry
         bool last = false;
         string output = "";
 
-        foreach(char c in input)
+        foreach (char c in input)
         {
-            if(last)
+            if (last)
             {
-                if(c != '"'){
+                if (c != '"')
+                {
                     output += c;
                 }
                 last = false;
             }
-            else if(output.EndsWith('"')){
+            else if (output.EndsWith('"'))
+            {
                 last = true;
                 output += c;
             }

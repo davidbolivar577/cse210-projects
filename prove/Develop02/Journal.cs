@@ -15,8 +15,9 @@ public class Journal
     {
         Journal j = new();
         string[] lines = System.IO.File.ReadAllLines(filename);
-        foreach(string line in lines){
-            string currentLine = line.Substring(1,line.Length - 2);
+        foreach (string line in lines)
+        {
+            string currentLine = line.Substring(1, line.Length - 2);
             string[] nEntry = currentLine.Split("\",\"");
             j.entries.Add(new Entry(nEntry));
         }
@@ -25,11 +26,13 @@ public class Journal
 
     public void Display()
     {
-        if(entries.Count() == 0){
+        if (entries.Count() == 0)
+        {
             Console.WriteLine("Journal is empty.");
         }
-        else{
-            foreach(Entry e in entries)
+        else
+        {
+            foreach (Entry e in entries)
             {
                 e.Display();
             }
@@ -40,16 +43,18 @@ public class Journal
     {
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
-            if(entries.Count() == 0){
-            Console.WriteLine("Action not available. Journal is empty.");
+            if (entries.Count() == 0)
+            {
+                Console.WriteLine("Action not available. Journal is empty.");
             }
-            else{
-                foreach(Entry e in entries)
+            else
+            {
+                foreach (Entry e in entries)
                 {
                     outputFile.WriteLine(e.Store());
                 }
             }
-            
+
         }
     }
 }
