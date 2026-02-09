@@ -25,7 +25,6 @@ class Program
                 sessionPrompts = [];
             }
             next = rand.Next(prompts.Count);
-            Console.WriteLine("Loop in do"); //debug
         } while (sessionPrompts.Contains(next));
         sessionPrompts.Add(next);
 
