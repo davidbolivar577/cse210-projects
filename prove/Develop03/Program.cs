@@ -19,7 +19,7 @@ class Program
             Console.Clear();
             Console.WriteLine(challenge.Display());
 
-            Console.Write("Press enter to continue or type 'quit' to finish: ");
+            Console.Write("\nPress enter to continue or type 'quit' to finish: ");
             string choice = Console.ReadLine();
             if (choice.Length > 0)
             {
