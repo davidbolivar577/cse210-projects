@@ -1,8 +1,12 @@
 using System;
 using System.ComponentModel;
+using System.ComponentModel;
 
 class Program
 {
+    private static List<Scripture> scriptures = [];
+    private static Scripture challenge;
+
     private static List<Scripture> scriptures = [];
     private static Scripture challenge;
 
