@@ -3,7 +3,7 @@ public class Activity
     protected string _name;
     protected string _description;
     //hardcoded pause timing
-    protected const int _timing = 5;
+    protected static int _timing = 5;
     protected int _duration = 0;
 
     protected static string _animation = "<>";
@@ -21,7 +21,23 @@ public class Activity
         Console.WriteLine($"{_description}\n");
 
         Console.Write("How long, in seconds, would you like the activity to last?: ");
-        _duration = int.Parse(Console.ReadLine());
+        string choice = Console.ReadLine();
+        if(choice.ToLower()[0] == 't')
+        {
+            Console.Write("Hidden Menu triggered:\nHow long, in seconds, would you like each small pause to last?: ");
+            choice = Console.ReadLine();
+            if(int.TryParse(choice, out int newTiming) && newTiming >= 1)
+            {
+                _timing = newTiming;
+            }
+            if(newTiming > 60)
+            {
+                _timing = 60;
+            }
+            Console.Write("How long, in seconds, would you like the activity to last?: ");
+            choice = Console.ReadLine();
+        }
+        _duration = int.Parse(choice);
         Console.Clear();
         Console.WriteLine($"Begining {_name}");
     }
