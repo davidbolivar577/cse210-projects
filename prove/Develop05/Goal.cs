@@ -49,7 +49,7 @@ abstract class Goal
                 break;
         }
     }
-    catch (Exception e)
+    catch (Exception)
     {
         Console.Error.WriteLine("Loading Error. Please save to remove");
         goal = null;
