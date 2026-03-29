@@ -51,6 +51,15 @@ class Deck
         _deck.RemoveAt(0);
         return c;
     }
+    public List<Card> Play(int n)
+    {
+        List<Card> extra = [];
+        for(int i = 0; i < n; i++)
+        {
+            extra.Add(Play());
+        }
+        return extra;
+    }
 
     public void Add(Card c)
     {
@@ -59,6 +68,12 @@ class Deck
     public void Add(List<Card> cards)
     {
         _deck.AddRange(cards);
+    }
+
+
+    public int GetRemaining()
+    {
+        return _deck.Count;
     }
 }
 
