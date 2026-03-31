@@ -16,7 +16,7 @@ class War
         _deck = d;
     }
 
-    public Player Run()
+    public void Run()
     {
         List<Player> active = _players;
         //reset players
@@ -25,6 +25,7 @@ class War
             p.Reset(_deck);
         }
 
+        //TODO remove
         Player winner = null;
 
         //run game of war, return player who won
@@ -44,7 +45,6 @@ class War
         }
         while (active.Count > 1);
         winner.Win();
-        return winner;
     }
 
     private Player Round(List<Player> playing)
@@ -77,6 +77,17 @@ class War
             _playArea.Add(p.Play());
         }
         return Greatest(playing);
+    }
+
+
+    public int[] getWins()
+    {
+        int[] wins = new int[_players.Count];
+        for(int i = 0; i < wins.Length; i++)
+        {
+            wins[i] = _players[i].GetWins();
+        }
+        return wins;
     }
 
 

@@ -4,13 +4,13 @@ class Config
 {
     private int _players;
     private Deck _deck;
-    private int _rounds;
+    private int _games;
 
-    public Config(int p, Deck d, int r)
+    public Config(int p, Deck d, int g)
     {
         _players = p;
         _deck = d;
-        _rounds = r;
+        _games = g;
     }
 
     [JsonConstructor]
@@ -28,9 +28,9 @@ class Config
     {
         return _deck;
     }
-    public int GetRounds()
+    public int GetGames()
     {
-        return _rounds;
+        return _games;
     }
 
 }
