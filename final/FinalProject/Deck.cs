@@ -1,8 +1,8 @@
-using System.IO.Compression;
-using System.Reflection.Metadata.Ecma335;
+using System.Text.Json.Serialization;
 
 class Deck
 {
+    [JsonInclude]
     List<Card> _deck;
 
     public Deck()

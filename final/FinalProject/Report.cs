@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 class Report
@@ -21,6 +22,10 @@ class Report
     public Report()
     {
         
+    }
+    public string Save()
+    {
+        return JsonSerializer.Serialize(this);
     }
 
     public void Display()

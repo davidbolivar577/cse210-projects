@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 class Card
 {
     public enum Suit
@@ -9,7 +11,9 @@ class Card
         Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace
     }
 
+    [JsonInclude]
     private Suit _suit;
+    [JsonInclude]
     private Value _value;
 
     public Card(Suit s, Value v)
@@ -18,7 +22,13 @@ class Card
         _value = v;
     }
 
-    public string GetName()
+    [JsonConstructor]
+    public Card()
+    {
+        
+    }
+
+    public override string ToString()
     {
         return $"{_value} of {_suit}s";
     }

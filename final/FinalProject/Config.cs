@@ -1,9 +1,13 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 class Config
 {
+    [JsonInclude]
     private int _players;
+    [JsonInclude]
     private Deck _deck;
+    [JsonInclude]
     private int _games;
 
     public Config(int p, Deck d, int g)
@@ -17,6 +21,11 @@ class Config
     public Config()
     {
         
+    }
+
+    public string Save()
+    {
+        return JsonSerializer.Serialize(this);
     }
     
     public int GetPlayers()

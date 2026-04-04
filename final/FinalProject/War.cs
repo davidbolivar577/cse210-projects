@@ -24,12 +24,7 @@ class War
         {
             p.Reset(_deck);
         }
-
-        //DEBUG
-        int round = 1;
-        //
-
-
+        
         Player winner = null;
 
         //run game of war, return player who won
