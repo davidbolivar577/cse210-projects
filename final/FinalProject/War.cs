@@ -18,37 +18,68 @@ class War
 
     public void Run()
     {
-        List<Player> active = _players;
+        List<Player> active = [.. _players];
         //reset players
-        foreach(Player p in active)
+        foreach (Player p in active)
         {
             p.Reset(_deck);
         }
 
-        //TODO remove
+        //DEBUG
+        int round = 1;
+        //
+
+
         Player winner = null;
 
         //run game of war, return player who won
         do
         {
+            //DEBUG
+            // Console.WriteLine($"round {round}");
+            // round++;
+            //
+            active = RemoveEmpty(active);
             winner = Round(active);
 
             _playArea.RemoveAll(item => item == null);
             _discard.RemoveAll(item => item == null);
 
-            winner.AddToDiscard(_playArea);
-            winner.AddToDiscard(_discard);
-
+            _discard.AddRange(_playArea);
             _playArea = [];
-            _discard = [];
-
+            active = RemoveEmpty(active);
+            if (winner is not null)
+            {
+                winner.AddToDiscard(_discard);
+                _discard = [];
+            }
+            //final draw safety
+            else if (NoneRemaining(active))
+            {
+                _discard = [];
+                foreach (Player p in active)
+                {
+                    p.Reset(_deck);
+                }
+            }
         }
         while (active.Count > 1);
-        winner.Win();
+        if (active.Count == 0)
+        {
+            Console.Error.WriteLine("Error: there is no winner");
+        }
+        else
+        {
+            active[0].Win();
+            //DEBUG
+            Console.WriteLine("Winner found");
+            //
+        }
     }
 
     private Player Round(List<Player> playing)
     {
+        playing = RemoveEmpty(playing);
         foreach (Player p in playing)
         {
             _playArea.Add(p.Play());
@@ -58,11 +89,16 @@ class War
         {
             winners = WarRound(winners);
         }
+        if (winners.Count == 0)
+        {
+            return null;
+        }
         return winners[0];
     }
 
     private List<Player> WarRound(List<Player> playing)
     {
+        playing = RemoveEmpty(playing);
         _playArea.RemoveAll(item => item == null);
         _discard.AddRange(_playArea);
         _playArea = [];
@@ -83,7 +119,7 @@ class War
     public int[] getWins()
     {
         int[] wins = new int[_players.Count];
-        for(int i = 0; i < wins.Length; i++)
+        for (int i = 0; i < wins.Length; i++)
         {
             wins[i] = _players[i].GetWins();
         }
@@ -93,29 +129,52 @@ class War
 
 
 
-    //support functions
     private List<Player> Greatest(List<Player> playing)
     {
-        Card.Value high = Enumerable.Max(_playArea).GetValue();
+        Card.Value? high = null;
         List<Player> winners = [];
         for (int i = 0; i < _playArea.Count; i++)
         {
-            if (high == _playArea[i].GetValue())
+            if ((high is null && _playArea[i] is not null) || (_playArea[i] is not null && _playArea[i].GetValue() > high))
+            {
+                high = _playArea[i].GetValue();
+            }
+        }
+
+        for (int i = 0; i < _playArea.Count; i++)
+        {
+            if (_playArea[i] is not null && _playArea[i].GetValue() == high)
             {
                 winners.Add(playing[i]);
             }
         }
         return winners;
     }
+
+    private static bool NoneRemaining(List<Player> players)
+    {
+        foreach (Player p in players)
+        {
+            if (p.GetRemaining() > 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    //support functions
     private static List<Player> RemoveEmpty(List<Player> active)
     {
-        for (int i = active.Count; i >= 0; i--)
+        for (int i = active.Count - 1; i >= 0; i--)
         {
-            if (active[i].GetRemaining() > 0)
+            if (active[i].GetRemaining() == 0)
             {
                 active.RemoveAt(i);
             }
         }
         return active;
     }
+
 }

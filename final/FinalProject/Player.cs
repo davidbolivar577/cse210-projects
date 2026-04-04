@@ -21,14 +21,25 @@ class Player
 
     public Card Play()
     {
-        return _deck.Play();
+        Card played = _deck.Play();
+        if(played is null)
+        {
+            _deck.Add(_discard);
+            _discard = [];
+            _deck.Shuffle();
+            played = _deck.Play();
+        }
+        return played;
     }
     public List<Card> Play(int n, bool playLastCard = true)
     {
         List<Card> played = [];
-        while (_deck.GetRemaining() > 1 || playLastCard)
+        for(int i = 0; i < n; i++)
         {
-            played.Add(_deck.Play());
+            if(GetRemaining() > 0 + (playLastCard ? 0 : 1))
+            {
+                played.Add(Play());
+            }
         }
         return played;
     }

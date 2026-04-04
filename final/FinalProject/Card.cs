@@ -1,5 +1,3 @@
-using System.Diagnostics.Contracts;
-
 class Card
 {
     public enum Suit
@@ -28,23 +26,47 @@ class Card
     {
         return _value;
     }
+    public Suit GetSuit()
+    {
+        return _suit;
+    }
 
-    // public static bool operator ==(Card left, Card right)
-    // {
-    //     if (left.GetValue() == right.GetValue())
-    //     {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // public static bool operator !=(Card left, Card right)
-    // {
-    //     if (left.GetValue() != right.GetValue())
-    //     {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public static bool operator ==(Card left, Card right)
+    {
+        if(left is null && right is null)
+        {
+            return true;
+        }
+
+        if(left is null ^ right is null)
+        {
+            return false;
+        }
+        if (left.GetValue() == right.GetValue())
+        {
+            return true;
+        }
+        return false;
+    }
+    public static bool operator !=(Card left, Card right)
+    {
+        return !(left == right);
+    }
+    public override bool Equals(object o)
+    {
+        if (o is Card card)
+        {
+            if (this.GetSuit() == card.GetSuit() && this.GetValue() == card.GetValue())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_suit, _value);
+    }
 
     public static bool operator >(Card left, Card right)
     {

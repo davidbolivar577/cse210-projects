@@ -32,12 +32,13 @@ class Report
         int least = -1;
         for(int i = 0; i < _playerWins.Length; i++)
         {
-            //Console.WriteLine($"Wins of Player {i+1}: {_playerWins[i]}");//List every player win
+            //TODO redo greatest/least logic
+            Console.WriteLine($"Wins of Player {i+1}: {_playerWins[i]}");//List every player win
             if(greatest == -1 || _playerWins[i] > _playerWins[greatest])
             {
                 greatest = i;
             }
-            else if(least == -1 || _playerWins[i] < _playerWins[least])
+            if(least == -1 || _playerWins[i] < _playerWins[least])
             {
                 least = i;
             }
@@ -46,10 +47,24 @@ class Report
         Console.WriteLine($"Least winrate: Player {least + 1} at {_playerWins[least]} out of {_games} games");
     }
 
-    public void Append(int[] wins, int rounds)
+    public void Append(int[] wins, int games)
     {
         _playerWins = [.. _playerWins.Zip(wins, (a, b) => a + b)];
-        _games += rounds;
+        _games += games;
+    }
+    public void Append(Report r)
+    {
+        if(this.GetDeck() != r.GetDeck())
+        {
+            throw new InvalidOperationException("incompatible reports: Deck type");
+        }
+        if(this.GetPlayerNumber() != r.GetPlayerNumber())
+        {
+            throw new InvalidOperationException("incompatible reports: player number");
+        }
+        _playerWins = [.. _playerWins.Zip(r.GetPlayerWins(), (a, b) => a + b)];
+        _games += r.GetGames();
+
     }
 
     public int GetPlayerNumber()
@@ -65,6 +80,11 @@ class Report
     public int GetGames()
     {
         return _games;
+    }
+
+    public int[] GetPlayerWins()
+    {
+        return _playerWins;
     }
 
     /*

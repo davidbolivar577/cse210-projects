@@ -1,3 +1,6 @@
+using System.IO.Compression;
+using System.Reflection.Metadata.Ecma335;
+
 class Deck
 {
     List<Card> _deck;
@@ -19,17 +22,41 @@ class Deck
     }
     public List<Card> GetDeck()
     {
-    	return _deck;
+        return _deck;
     }
 
     public void Shuffle()
     {
         Random r = new();
-        for(int i = _deck.Count - 1; i > 0; i--)
+        for (int i = _deck.Count - 1; i > 0; i--)
         {
-            int n = r.Next(i+1);
+            int n = r.Next(i + 1);
             (_deck[n], _deck[i]) = (_deck[i], _deck[n]);
         }
+    }
+
+    public bool IsEqual(Deck d)
+    {
+        List<Card> sorted = [.. _deck];
+        List<Card> compare = [.. d.GetDeck()];
+        if (sorted.Count != compare.Count)
+        {
+            return false;
+        }
+        else
+        {
+            sorted.Sort();
+            compare.Sort();
+            for(int i = 0; i < sorted.Count; i++)
+            {
+                if(sorted[i] != compare[i])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void Reset()
@@ -38,12 +65,12 @@ class Deck
     }
     public void Reset(Deck deck)
     {
-        _deck = deck.GetDeck();
+        _deck = [.. deck.GetDeck()];
     }
-    
+
     public Card Play()
     {
-        if(_deck.Count == 0)
+        if (_deck.Count == 0)
         {
             return null;
         }
@@ -54,7 +81,7 @@ class Deck
     public List<Card> Play(int n)
     {
         List<Card> extra = [];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             extra.Add(Play());
         }
