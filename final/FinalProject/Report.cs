@@ -3,10 +3,15 @@ using System.Text.Json.Serialization;
 
 class Report
 {
+    [JsonInclude]
     private Deck _deckUsed;
+    [JsonInclude]
     private int _players;
+    [JsonInclude]
     private int[] _playerWins;
+    [JsonInclude]
     private int _games;
+    [JsonInclude]
     private DateTime _created;
 
     public Report(Deck d, int p, int g)
@@ -37,7 +42,6 @@ class Report
         int least = -1;
         for(int i = 0; i < _playerWins.Length; i++)
         {
-            //TODO redo greatest/least logic
             Console.WriteLine($"Wins of Player {i+1}: {_playerWins[i]}");//List every player win
             if(greatest == -1 || _playerWins[i] > _playerWins[greatest])
             {
@@ -59,7 +63,7 @@ class Report
     }
     public void Append(Report r)
     {
-        if(this.GetDeck() != r.GetDeck())
+        if(!this.GetDeck().Equals(r.GetDeck()))
         {
             throw new InvalidOperationException("incompatible reports: Deck type");
         }

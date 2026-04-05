@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-class Card
+class Card : IComparable
 {
     public enum Suit
     {
@@ -25,7 +25,7 @@ class Card
     [JsonConstructor]
     public Card()
     {
-        
+
     }
 
     public override string ToString()
@@ -43,12 +43,12 @@ class Card
 
     public static bool operator ==(Card left, Card right)
     {
-        if(left is null && right is null)
+        if (left is null && right is null)
         {
             return true;
         }
 
-        if(left is null ^ right is null)
+        if (left is null ^ right is null)
         {
             return false;
         }
@@ -78,9 +78,33 @@ class Card
         return HashCode.Combine(_suit, _value);
     }
 
+    public int CompareTo(object obj)
+    {
+        if(obj is not Card c)
+        {
+            throw new Exception("Error: not a card");
+        }
+        else
+        {
+            if(this > c)
+            {
+                return 1;
+            }
+            else if (this < c)
+            {
+                return -1;
+            }
+        }
+        return 0;
+    }
+
     public static bool operator >(Card left, Card right)
     {
         if (left.GetValue() > right.GetValue())
+        {
+            return true;
+        }
+        else if (left.GetValue() == right.GetValue() && left.GetSuit() > right.GetSuit())
         {
             return true;
         }
@@ -89,6 +113,10 @@ class Card
     public static bool operator <(Card left, Card right)
     {
         if (left.GetValue() < right.GetValue())
+        {
+            return true;
+        }
+        else if (left.GetValue() == right.GetValue() && left.GetSuit() < right.GetSuit())
         {
             return true;
         }

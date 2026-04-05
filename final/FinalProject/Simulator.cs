@@ -17,7 +17,7 @@ class Simulator
         _players = c.GetPlayers();
         _deck = c.GetDeck();
         _games = c.GetGames();
-        _results = new(_deck, _players, _games);
+        _results = new(_deck, _players, 0);
     }
     public Simulator(Report r)
     {
@@ -40,7 +40,6 @@ class Simulator
         {
             sim.Run();
         }
-        //TODO add wins
         _results.Append(sim.getWins(), _games);
     }
 

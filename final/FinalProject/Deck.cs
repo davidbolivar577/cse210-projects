@@ -7,18 +7,30 @@ class Deck
 
     public Deck()
     {
-        _deck = [];
+        _deck = GetDefault();
+    }
+    public Deck(List<Card> cards)
+    {
+        if (cards.Count == 0)
+        {
+            _deck = GetDefault();
+        }
+        else
+        {
+            _deck = cards;
+        }
+    }
+    private static List<Card> GetDefault()
+    {
+        List<Card> deck = [];
         foreach (Card.Suit s in Enum.GetValues<Card.Suit>())
         {
             foreach (Card.Value v in Enum.GetValues<Card.Value>())
             {
-                _deck.Add(new(s, v));
+                deck.Add(new(s, v));
             }
         }
-    }
-    public Deck(List<Card> cards)
-    {
-        _deck = cards;
+        return deck;
     }
     public List<Card> GetDeck()
     {
@@ -35,8 +47,12 @@ class Deck
         }
     }
 
-    public bool IsEqual(Deck d)
+    public override bool Equals(Object o)
     {
+        if (o is null || o is not Deck d)
+        {
+            return false;
+        }
         List<Card> sorted = [.. _deck];
         List<Card> compare = [.. d.GetDeck()];
         if (sorted.Count != compare.Count)
@@ -47,9 +63,9 @@ class Deck
         {
             sorted.Sort();
             compare.Sort();
-            for(int i = 0; i < sorted.Count; i++)
+            for (int i = 0; i < sorted.Count; i++)
             {
-                if(sorted[i] != compare[i])
+                if (sorted[i] != compare[i])
                 {
                     return false;
                 }
@@ -57,6 +73,11 @@ class Deck
         }
 
         return true;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_deck);
     }
 
     public void Reset()
@@ -102,5 +123,7 @@ class Deck
     {
         return _deck.Count;
     }
+
+
 }
 

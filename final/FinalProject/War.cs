@@ -24,16 +24,12 @@ class War
         {
             p.Reset(_deck);
         }
-        
+
         Player winner = null;
 
         //run game of war, return player who won
         do
         {
-            //DEBUG
-            // Console.WriteLine($"round {round}");
-            // round++;
-            //
             active = RemoveEmpty(active);
             winner = Round(active);
 
@@ -42,11 +38,11 @@ class War
 
             _discard.AddRange(_playArea);
             _playArea = [];
-            active = RemoveEmpty(active);
             if (winner is not null)
             {
                 winner.AddToDiscard(_discard);
                 _discard = [];
+                active = RemoveEmpty(active);
             }
             //final draw safety
             else if (NoneRemaining(active))
@@ -66,9 +62,6 @@ class War
         else
         {
             active[0].Win();
-            //DEBUG
-            Console.WriteLine("Winner found");
-            //
         }
     }
 
